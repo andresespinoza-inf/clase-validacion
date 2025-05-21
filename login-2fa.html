@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login con 2FA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .hidden {
+      display: none;
+    }
+    .success {
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Pantalla de login -->
+    <div id="login-screen">
+      <h2>Iniciar Sesión</h2>
+      <input type="text" id="usuario" placeholder="Usuario" required>
+      <input type="password" id="clave" placeholder="Contraseña" required>
+      <button onclick="validarLogin()">Iniciar sesión</button>
+    </div>
+
+    <!-- Pantalla de verificación 2FA -->
+    <div id="verificacion-screen" class="hidden">
+      <h2>Verificación en Dos Pasos</h2>
+      <p>Ingresa el código enviado a tu dispositivo</p>
+      <input type="number" id="codigo" placeholder="Código de 6 dígitos" required>
+      <button onclick="validarCodigo()">Verificar</button>
+    </div>
+
+    <!-- Pantalla de éxito -->
+    <div id="success-screen" class="hidden">
+      <h2 class="success">✅ Acceso concedido</h2>
+      <p style="text-align: center;">Bienvenido al sistema seguro.</p>
+    </div>
+  </div>
+
+  <script>
+    // Simulamos un usuario y contraseña válidos
+    const usuarioValido = "usuario";
+    const claveValida = "1234";
+
+    // Simulamos un código 2FA fijo (en la vida real se enviaría al correo o celular)
+    const codigoSimulado = "654321";
+
+    function validarLogin() {
+      const usuario = document.getElementById("usuario").value;
+      const clave = document.getElementById("clave").value;
+
+      if (usuario === usuarioValido && clave === claveValida) {
+        // Cambiar a pantalla de verificación
+        document.getElementById("login-screen").classList.add("hidden");
+        document.getElementById("verificacion-screen").classList.remove("hidden");
+      } else {
+        alert("Usuario o contraseña incorrectos");
+      }
+    }
+
+    function validarCodigo() {
+      const codigo = document.getElementById("codigo").value;
+
+      if (codigo === codigoSimulado) {
+        // Mostrar éxito
+        document.getElementById("verificacion-screen").classList.add("hidden");
+        document.getElementById("success-screen").classList.remove("hidden");
+      } else {
+        alert("Código incorrecto");
+      }
+    }
+  </script>
+
+</body>
+</html>
